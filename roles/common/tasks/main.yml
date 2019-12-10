@@ -1,0 +1,9 @@
+---
+# tasks file for common
+- name: copy repo file
+  copy:
+   src: open_three-tier-app.repo
+   dest: /etc/yum.repos.d
+
+
+

@@ -1,0 +1,20 @@
+---
+# tasks file for lb-tier
+- name: Install latest version of HA Proxy service on frontend server
+  yum:
+   name: haproxy
+   state: latest
+
+- name: Configure HA Proxy to be enabled and started at the systen startup
+  service:
+   name: haproxy
+   state: started
+   enabled: yes
+
+- name: Copy Jinja Template for HA Proxy
+  template:
+   src: haproxy.cfg.j2  
+   dest: /etc/haproxy/haproxy.cfg
+   mode: 0644
+  notify: restart haproxy 
+    

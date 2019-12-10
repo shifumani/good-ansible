@@ -1,0 +1,26 @@
+---
+# tasks file for app-tier
+
+- name: Deploy Tomcat service on Application Servers
+  yum:
+    name: tomcat
+    state: latest
+
+- name: Configure Tomcat service to start and be enabled on system startup
+  service:
+     name: tomcat
+     state: started
+     enabled: yes
+
+- name: Create ansible tomcat directory
+  file:
+     path: /usr/share/tomcat/webapps/ROOT
+     state: directory
+
+- name: Copy static index.html to tomcat webapps/ansible/index.html
+  template:
+     src: index.html.j2
+     dest: /usr/share/tomcat/webapps/ROOT/index.html
+     mode: 0644
+
+

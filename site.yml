@@ -1,0 +1,19 @@
+
+
+- hosts: frontends
+  become: yes
+  roles: 
+    - common
+    - lb-tier
+
+- hosts: apps
+  become: yes
+  roles:
+    - common
+    - app-tier
+
+- hosts: appdbs
+  become: yes
+  roles:
+    - common
+    - db-tier

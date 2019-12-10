@@ -1,0 +1,27 @@
+---
+# tasks file for db-tier
+
+- name: Deploy Postgres service on Database server
+  yum:
+    name: postgresql-server
+    state: latest
+
+
+- name: Check that if Postgres file exists
+  stat:
+    path: /var/lib/pgsql/data/PG_VERSION
+  register: stat_result
+
+- debug: var=stat_result
+
+- name: Initiate PostgresSQL if file doesn't exist
+  command: postgresql-setup initdb
+  when: stat_result.stat.exists == False
+
+- name: Set Postgres service to enable and started
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+
